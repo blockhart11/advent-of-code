@@ -1,4 +1,4 @@
-package main
+package _1
 
 import (
 	"bufio"
@@ -16,6 +16,8 @@ func TestHoHoHo(t *testing.T) {
 }
 
 func TestAB(t *testing.T) {
+	fmt.Printf("\n\n*****  DAY ONE  *****\n\n")
+
 	file, err := os.Open("input.txt")
 	if err != nil {
 		t.Error("can't open file")
