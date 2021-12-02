@@ -22,7 +22,7 @@ func TestAB(t *testing.T) {
 	}
 	defer file.Close()
 
-	var inputA []int
+	var inA []int
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
@@ -30,22 +30,22 @@ func TestAB(t *testing.T) {
 		if err != nil {
 			t.Error("can't convert file to []int")
 		}
-		inputA = append(inputA, next)
+		inA = append(inA, next)
 	}
 
 	if err := scanner.Err(); err != nil {
 		t.Error("scanner dun goofed :shrug:")
 	}
 
-	fmt.Printf("A: There are %d increases in depth!\n", A(inputA))
-	
-	var inputB []int
-	for i, _ := range inputA {
-		if i >= len(inputA) - 2 {
-			break
-		}
-		inputB = append(inputB, inputA[i] + inputA[i+1] + inputA[i+2])
+	fmt.Printf("A: There are %d increases in depth!\n", A(inA))
+
+	var inB []int
+	for i, _ := range inA[:len(inA)-2] {
+		inB = append(inB, inA[i] + inA[i+1] + inA[i+2])
 	}
 
-	fmt.Printf("B: There are %d increases in depth!", A(inputB))
+	fmt.Printf("B: There are %d increases in depth!\n", A(inB))
+
+	// V2.0
+	fmt.Printf("B, but better: There are (still) %d increases in depth!\n", B(inA))
 }

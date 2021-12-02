@@ -15,3 +15,13 @@ func A(in []int) int {
 	}
 	return count
 }
+
+func B(in []int) int {
+	count := 0
+	for i, _ := range in[:len(in)-3] {
+		if in[i] < in[i+3] {
+			count++
+		}
+	}
+	return count
+}
