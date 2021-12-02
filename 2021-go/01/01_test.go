@@ -1,10 +1,8 @@
 package _1
 
 import (
-	"bufio"
 	"fmt"
 	"os"
-	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -18,25 +16,22 @@ func TestHoHoHo(t *testing.T) {
 func TestAB(t *testing.T) {
 	fmt.Printf("\n\n*****  DAY ONE  *****\n\n")
 
-	file, err := os.Open("input.txt")
+	f, err := os.Open("input.txt")
 	if err != nil {
-		t.Error("can't open file")
+		t.Error("can't open f")
 	}
-	defer file.Close()
+	defer f.Close()
 
 	var inA []int
 
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		next, err := strconv.Atoi(scanner.Text())
-		if err != nil {
-			t.Error("can't convert file to []int")
+	for {
+		var n, value int
+		n, err = fmt.Fscanln(f, &value)
+		if n == 0 || err != nil {
+			t.Error("file scanner borked")
+			break
 		}
-		inA = append(inA, next)
-	}
-
-	if err := scanner.Err(); err != nil {
-		t.Error("scanner dun goofed :shrug:")
+		inA = append(inA, value)
 	}
 
 	fmt.Printf("A: There are %d increases in depth!\n", A(inA))
