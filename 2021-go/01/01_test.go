@@ -37,7 +37,7 @@ func TestAB(t *testing.T) {
 	fmt.Printf("A: There are %d increases in depth!\n", A(inA))
 
 	var inB []int
-	for i, _ := range inA[:len(inA)-2] {
+	for i := range inA[:len(inA)-2] {
 		inB = append(inB, inA[i] + inA[i+1] + inA[i+2])
 	}
 
