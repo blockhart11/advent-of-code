@@ -52,11 +52,6 @@ func do(t *testing.T, fName string, days int) int {
 			t.Errorf("unexpected input")
 		}
 	}
-	// cheating a bit...
-	//repls1 := growFish(1, 7, days)
-	//repls2 := growFish(5, 7, days)
-	//d1, d2 = repls1*c1, repls1*c2
-	//d3, d4, d5 = repls2*c3, repls2*c4, repls2*c5
 	d1 = growFish(1, 7, days) * c1
 	d2 = growFish(2, 7, days) * c2
 	d3 = growFish(3, 7, days) * c3
