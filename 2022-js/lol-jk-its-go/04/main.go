@@ -19,15 +19,14 @@ func main() {
 		if err != nil {
 			break
 		}
-		if (a == c || b == d) ||
-			(a < c && b > d) ||
-			(a > c && b < d) {
+		if (a <= c && b >= d) || // 2nd half contained inside first
+			(a >= c && b <= d) { // 1st half contained inside second
 			partOneCount++
 		}
-		if (a >= c && a <= d) ||
-			(b >= c && b <= d) ||
-			(c >= a && c <= b) ||
-			(d >= a && d <= b) {
+		if (a >= c && a <= d) || // 1st half lower bound inside 2nd half
+			(b >= c && b <= d) || // 1st half upper bound inside 2nd half
+			(c >= a && c <= b) || // 2nd half lower bound inside 1st half
+			(d >= a && d <= b) { // 2nd half upper bound inside 1st half
 			partTwoCount++
 		}
 	}
