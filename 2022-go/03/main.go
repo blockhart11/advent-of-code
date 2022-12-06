@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	f, err := os.Open("./2022-js/lol-jk-its-go/03/input.txt")
+	f, err := os.Open("./2022-go/03/input.txt")
 	if err != nil {
 		panic(err)
 	}

@@ -11,7 +11,7 @@ const (
 )
 
 func main() {
-	input, err := os.ReadFile("./2022-js/lol-jk-its-go/06/input.txt")
+	input, err := os.ReadFile("./2022-go/06/input.txt")
 	if err != nil {
 		panic(err)
 	}

@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	input, err := os.Open("./2022-js/lol-jk-its-go/05/input.txt")
-	cratesRaw, err := os.ReadFile("./2022-js/lol-jk-its-go/05/crates.txt")
+	input, err := os.Open("./2022-go/05/input.txt")
+	cratesRaw, err := os.ReadFile("./2022-go/05/crates.txt")
 	if err != nil {
 		panic(err)
 	}

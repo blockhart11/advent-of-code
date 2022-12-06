@@ -38,7 +38,7 @@ var gameMap2 = map[string]int{
 }
 
 func main() {
-	f, err := os.Open("./2022-js/lol-jk-its-go/02/input.txt")
+	f, err := os.Open("./2022-go/02/input.txt")
 	if err != nil {
 		panic(err)
 	}
