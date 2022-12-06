@@ -9,12 +9,12 @@ import (
 )
 
 func main() {
-	f, err := os.Open("./2022-js/lol-jk-its-go/05/input.txt")
+	input, err := os.Open("./2022-js/lol-jk-its-go/05/input.txt")
 	cratesRaw, err := os.ReadFile("./2022-js/lol-jk-its-go/05/crates.txt")
 	if err != nil {
 		panic(err)
 	}
-	defer f.Close()
+	defer input.Close()
 
 	// Make stacks
 	crates := make([]stack.Stack, 9, 9)
@@ -31,7 +31,7 @@ func main() {
 	fmt.Println(peekAll(crates))
 	for {
 		var move, from, to int
-		_, err = fmt.Fscanf(f, "move %d from %d to %d", &move, &from, &to)
+		_, err = fmt.Fscanf(input, "move %d from %d to %d", &move, &from, &to)
 		if err != nil {
 			break
 		}
