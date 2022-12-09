@@ -28,12 +28,12 @@ func main() {
 		panic(err)
 	}
 
-	var root = &dir{
+	root := &dir{
 		name:     "/",
 		children: make(map[string]*dir),
 		files:    make(map[string]int),
 	}
-	var wd = root
+	wd := root
 
 	// Let's gooooooo
 	for _, v := range strings.Split(string(input), "\n") {
