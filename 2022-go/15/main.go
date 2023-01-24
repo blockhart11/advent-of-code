@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"math"
 	"os"
-	"strconv"
 	"strings"
 
+	"github.com/blockhart11/advent-of-code/internal/utils"
 	"github.com/golang-collections/collections"
 )
 
@@ -33,14 +33,14 @@ func main() {
 	for _, line := range strings.Split(string(input), "\n") {
 		coords := strings.Split(line, " ")
 		b := beacon{
-			X: atoiX(coords[2]),
-			Y: atoiX(coords[3]),
+			X: utils.AtoiX(coords[2]),
+			Y: utils.AtoiX(coords[3]),
 		}
 		beacons = append(beacons, b)
 		s := sensor{
 			loc: collections.Point{
-				X: atoiX(coords[0]),
-				Y: atoiX(coords[1]),
+				X: utils.AtoiX(coords[0]),
+				Y: utils.AtoiX(coords[1]),
 			},
 			closest: &b,
 		}
@@ -163,12 +163,4 @@ func withinAnyRange(point collections.Point, sensors []sensor) bool {
 		}
 	}
 	return false
-}
-
-func atoiX(input string) int {
-	out, err := strconv.Atoi(input)
-	if err != nil {
-		panic(err)
-	}
-	return out
 }
