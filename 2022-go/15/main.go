@@ -33,14 +33,14 @@ func main() {
 	for _, line := range strings.Split(string(input), "\n") {
 		coords := strings.Split(line, " ")
 		b := beacon{
-			X: utils.AtoiX(coords[2]),
-			Y: utils.AtoiX(coords[3]),
+			X: utils.MustAtoi(coords[2]),
+			Y: utils.MustAtoi(coords[3]),
 		}
 		beacons = append(beacons, b)
 		s := sensor{
 			loc: collections.Point{
-				X: utils.AtoiX(coords[0]),
-				Y: utils.AtoiX(coords[1]),
+				X: utils.MustAtoi(coords[0]),
+				Y: utils.MustAtoi(coords[1]),
 			},
 			closest: &b,
 		}

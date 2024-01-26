@@ -1,3 +1,6 @@
 {
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "@apollo/client": "^3.7.14"
+  }
 }

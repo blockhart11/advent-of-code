@@ -2,7 +2,7 @@ package utils
 
 import "strconv"
 
-func AtoiX(input string) int {
+func MustAtoi(input string) int {
 	out, err := strconv.Atoi(input)
 	if err != nil {
 		panic(err)

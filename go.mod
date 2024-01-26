@@ -1,11 +1,10 @@
 module github.com/blockhart11/advent-of-code
 
-go 1.19
+go 1.21
 
 require (
 	github.com/golang-collections/collections v0.0.0-20130729185459-604e922904d3
 	github.com/stretchr/testify v1.7.0
-	golang.org/x/exp v0.0.0-20221205204356-47842c84f3db
 )
 
 require (

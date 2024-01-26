@@ -42,7 +42,7 @@ func main() {
 		args := strings.Split(line, " ")
 		v := valve{
 			name:  args[0],
-			rate:  utils.AtoiX(args[1]),
+			rate:  utils.MustAtoi(args[1]),
 			costs: make(map[string]int),
 		}
 		for i := 2; i < len(args); i++ {
