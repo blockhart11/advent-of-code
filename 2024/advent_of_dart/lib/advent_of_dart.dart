@@ -73,4 +73,7 @@ class Solutions {
     return result;
   }
   
+  // template
+  int dayXXa(List<String> lines) { return -1; }
+  int dayXXb(List<String> lines) { return -1; }
 }
