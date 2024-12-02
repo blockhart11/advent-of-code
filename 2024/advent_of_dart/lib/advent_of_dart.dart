@@ -1,7 +1,36 @@
 import 'dart:io';
 import 'dart:mirrors';
 
-Future<void> calculate(String day, [bool test = false, bool alt = false]) async {
+import 'day01.dart';
+import 'day02.dart';
+/*
+import 'day03.dart';
+import 'day04.dart';
+import 'day05.dart';
+import 'day06.dart';
+import 'day07.dart';
+import 'day08.dart';
+import 'day09.dart';
+import 'day10.dart';
+import 'day11.dart';
+import 'day12.dart';
+import 'day13.dart';
+import 'day14.dart';
+import 'day15.dart';
+import 'day16.dart';
+import 'day17.dart';
+import 'day18.dart';
+import 'day19.dart';
+import 'day20.dart';
+import 'day21.dart';
+import 'day22.dart';
+import 'day23.dart';
+import 'day24.dart';
+import 'day25.dart';
+*/
+
+Future<void> calculate(String day,
+    [bool test = false, bool alt = false]) async {
   var mirror = reflect(Solutions());
   final sample = test ? "_sample" : "";
   final part = alt ? 'b' : 'a';
@@ -15,8 +44,9 @@ Future<void> calculate(String day, [bool test = false, bool alt = false]) async 
     } else {
       expect = expect.split(" ")[1];
     }
-    
-    final result = mirror.invoke(Symbol('day$day$part'), [lines.sublist(1)]).reflectee;
+
+    final result =
+        mirror.invoke(Symbol('day$day$part'), [lines.sublist(1)]).reflectee;
     print('Test run of day $day, part $part: expected $expect, got $result');
   } else {
     final result = mirror.invoke(Symbol('day$day$part'), [lines]).reflectee;
@@ -24,56 +54,30 @@ Future<void> calculate(String day, [bool test = false, bool alt = false]) async 
   }
 }
 
-class Solutions {
-  int day01a(List<String> lines) {
-    int result = 0;
-    List<int> lhs = [];
-    List<int> rhs = [];
-
-    // parse input lines into 2 arrays
-    for (var line in lines) {
-      final args = line.split(" ");
-      lhs.add(int.parse(args[0]));
-      rhs.add(int.parse(args[1]));
-    }
-
-    // sort the arrays
-    lhs.sort(); rhs.sort();
-
-    // calculate distance for each line
-    for (int i = 0; i < lhs.length; i++) {
-      result += (lhs[i] - rhs[i]).abs();
-    }
-
-    return result;
-  }
-  int day01b(List<String> lines) {
-    int result = 0;
-    List<int> lhs = [];
-    Map<int, int> rhsCount = {};
-
-    // parse input lines into 2 arrays
-    for (var line in lines) {
-      final args = line.split(" ");
-      lhs.add(int.parse(args[0]));
-      final rhs = int.parse(args[1]);
-      if (rhsCount.containsKey(rhs)) {
-        rhsCount[rhs] = rhsCount[rhs]! + 1;
-      } else {
-        rhsCount[rhs] = 1;
-      }
-    }
-
-    for (int left in lhs) {
-      if (rhsCount.containsKey(left)) {
-        result += left * rhsCount[left]!;
-      }
-    }
-
-    return result;
-  }
-  
-  // template
-  int dayXXa(List<String> lines) { return -1; }
-  int dayXXb(List<String> lines) { return -1; }
-}
+class Solutions with 
+// Day25,
+// Day24, 
+// Day23, 
+// Day22, 
+// Day21, 
+// Day20, 
+// Day19, 
+// Day18, 
+// Day17, 
+// Day16, 
+// Day15, 
+// Day14, 
+// Day13, 
+// Day12, 
+// Day11, 
+// Day10, 
+// Day09, 
+// Day08, 
+// Day07, 
+// Day06, 
+// Day05, 
+// Day04, 
+// Day03, 
+Day02, 
+Day01 
+{}
