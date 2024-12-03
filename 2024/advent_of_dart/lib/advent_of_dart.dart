@@ -3,8 +3,8 @@ import 'dart:mirrors';
 
 import 'day01.dart';
 import 'day02.dart';
-/*
 import 'day03.dart';
+/*
 import 'day04.dart';
 import 'day05.dart';
 import 'day06.dart';
@@ -77,7 +77,7 @@ class Solutions with
 // Day06, 
 // Day05, 
 // Day04, 
-// Day03, 
+Day03, 
 Day02, 
 Day01 
 {}
