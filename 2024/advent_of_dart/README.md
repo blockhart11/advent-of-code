@@ -12,7 +12,7 @@ Example:
 
 The following command solves day 1, part 2 for its sample input
 
-`dart run advent_of_dart 01 -t -b`
+`dart run advent_of_dart 01 -tb`
 
 Output:
 
