@@ -7,6 +7,7 @@ CLI Flags:
 
 * -t: runs the challenge in test mode, which uses the daily sample input and compares to the expected output. See `input/01_sample.txt` for an example. The expected output is always the first line of that file (part 1 output on the left, then part 2 on the right).
 * -b: runs part 2 of the daily challenge. This can be used in conjunction with -t to run against the sample input for part 2.
+* -c: creates file templates for a given day. Overrides other flags, and jJust saves a little time when starting a new day. For example, `dart run advent_of_dart 10 -c` creates `input/10.txt`, `input/10_sample.txt`, and `lib/day10.dart`
 
 Example:
 
