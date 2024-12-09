@@ -8,8 +8,8 @@ import 'day04.dart';
 import 'day05.dart';
 import 'day06.dart';
 import 'day07.dart';
-/*
 import 'day08.dart';
+/*
 import 'day09.dart';
 import 'day10.dart';
 import 'day11.dart';
@@ -48,7 +48,7 @@ class Solutions
 // Day11,
 // Day10,
 // Day09,
-// Day08,
+        Day08,
         Day07,
         Day06,
         Day05,
