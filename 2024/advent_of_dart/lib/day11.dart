@@ -6,7 +6,7 @@ mixin Day11 {
     Map<String, Map<int, int>> cache = {}; // key is the stone id, value is cached map of blinksLeft and solution
 
     for (final stone in stones) {
-      result += day11aHelper(stone, 25, cache);
+      result += day11Helper(stone, 25, cache);
     }
 
     return result;
@@ -19,13 +19,13 @@ mixin Day11 {
     Map<String, Map<int, int>> cache = {}; // key is the stone id, value is cached map of blinksLeft and solution
 
     for (final stone in stones) {
-      result += day11aHelper(stone, 75, cache);
+      result += day11Helper(stone, 75, cache);
     }
 
     return result;
   }
 
-  int day11aHelper(String stone, int blinksLeft, Map<String, Map<int, int>> cache) {
+  int day11Helper(String stone, int blinksLeft, Map<String, Map<int, int>> cache) {
     if (blinksLeft == 0) {
       return 1; // base case
     }
@@ -40,7 +40,7 @@ mixin Day11 {
     int result = 0;
 
     if (int.parse(stone) == 0) { // use int to remove padding zeroes
-      result = day11aHelper('1', blinksLeft - 1, cache);
+      result = day11Helper('1', blinksLeft - 1, cache);
       cache[stone]![blinksLeft] = result;
     } else if (stone.length.isEven) {
       String lhs = stone.substring(0, stone.length ~/ 2);
@@ -48,11 +48,11 @@ mixin Day11 {
       if (rhs == '') rhs = '0';
 
       result =
-        day11aHelper(lhs, blinksLeft - 1, cache)
-      + day11aHelper(rhs, blinksLeft - 1, cache);
+        day11Helper(lhs, blinksLeft - 1, cache)
+      + day11Helper(rhs, blinksLeft - 1, cache);
       cache[stone]![blinksLeft] = result;
     } else {
-      result = day11aHelper((int.parse(stone) * 2024).toString(), blinksLeft - 1, cache);
+      result = day11Helper((int.parse(stone) * 2024).toString(), blinksLeft - 1, cache);
       cache[stone]![blinksLeft] = result;
     }
 
