@@ -14,10 +14,6 @@ mixin Day10 {
           // work backwards from 9
           map[y][x] = (9, 1, [nineIdx]);
           visitNeighborsDistinct(map, x, y, nineIdx);
-          // print('visited 9 #$nineIdx at ($x, $y):');
-          // for (final line in map) {
-          //   print(line);
-          // }
           nineIdx++;
         }
       }
@@ -47,10 +43,6 @@ mixin Day10 {
           // work backwards from 9
           map[y][x] = (9, 1);
           visitNeighbors(map, x, y);
-          // print('visited 9 #$nineIdx at ($x, $y):');
-          // for (final line in map) {
-          //   print(line);
-          // }
         }
       }
     }
