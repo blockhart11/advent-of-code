@@ -1,9 +1,9 @@
-enum Direction { up, down, left, right }
+import 'package:advent_of_dart/utils/direction.dart';
 
 class Position {
   int x;
   int y;
-  Direction orientation = Direction.up;
+  Dir2D orientation = Dir2D.up;
 
   Position(this.x, this.y);
   void setPos(int x, int y) {
@@ -13,14 +13,14 @@ class Position {
 
   void rotate() {
     switch (orientation) {
-      case Direction.up:
-        orientation = Direction.right;
-      case Direction.down:
-        orientation = Direction.left;
-      case Direction.right:
-        orientation = Direction.down;
-      case Direction.left:
-        orientation = Direction.up;
+      case Dir2D.up:
+        orientation = Dir2D.right;
+      case Dir2D.down:
+        orientation = Dir2D.left;
+      case Dir2D.right:
+        orientation = Dir2D.down;
+      case Dir2D.left:
+        orientation = Dir2D.up;
     }
   }
 }
@@ -74,32 +74,32 @@ mixin Day06 {
         while (inBounds(pos, map.length, map[0].length) && !foundLoop) {
           // check for a loop
           switch (pos.orientation) {
-            case Direction.up:
+            case Dir2D.up:
               if (visited.containsKey((pos.y, pos.x)) && visited[(pos.y,pos.x)]!.visitedUp) {
                 foundLoop = true;
               } else {
                 visited.update((pos.y,pos.x),(tile) => tile..visitedUp = true, ifAbsent: () => Tile()..visitedUp = true);
               }
-            case Direction.down:
+            case Dir2D.down:
               if (visited.containsKey((pos.y, pos.x)) && visited[(pos.y,pos.x)]!.visitedDown) {
                 foundLoop = true;
               } else {
                 visited.update((pos.y,pos.x),(tile) => tile..visitedDown = true, ifAbsent: () => Tile()..visitedDown = true);
               }
-            case Direction.right:
+            case Dir2D.right:
               if (visited.containsKey((pos.y, pos.x)) && visited[(pos.y,pos.x)]!.visitedRight) {
                 foundLoop = true;
               } else {
                 visited.update((pos.y,pos.x),(tile) => tile..visitedRight = true, ifAbsent: () => Tile()..visitedRight = true);
               }
-            case Direction.left:
+            case Dir2D.left:
               if (visited.containsKey((pos.y, pos.x)) && visited[(pos.y,pos.x)]!.visitedLeft) {
                 foundLoop = true;
               } else {
                 visited.update((pos.y,pos.x),(tile) => tile..visitedLeft = true, ifAbsent: () => Tile()..visitedLeft = true);
               }
             default: // error
-              throw ('what direction is this even');
+              throw ('what Dir2D is this even');
           }
 
           if (foundLoop) {
@@ -136,25 +136,25 @@ mixin Day06 {
 
   void move(List<List<Tile>> map, Position pos) {
     switch (pos.orientation) {
-      case Direction.up:
+      case Dir2D.up:
         if (pos.y == 0 || !map[pos.y - 1][pos.x].obstructed) {
           pos.setPos(pos.x, pos.y - 1); // move
         } else {
           pos.rotate();
         }
-      case Direction.down:
+      case Dir2D.down:
         if (pos.y == map.length - 1 || !map[pos.y + 1][pos.x].obstructed) {
           pos.setPos(pos.x, pos.y + 1); // move
         } else {
           pos.rotate();
         }
-      case Direction.left:
+      case Dir2D.left:
         if (pos.x == 0 || !map[pos.y][pos.x - 1].obstructed) {
           pos.setPos(pos.x - 1, pos.y); // move
         } else {
           pos.rotate();
         }
-      case Direction.right:
+      case Dir2D.right:
         if (pos.x == map[0].length - 1 || !map[pos.y][pos.x + 1].obstructed) {
           pos.setPos(pos.x + 1, pos.y); // move
         } else {

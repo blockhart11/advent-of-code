@@ -1,0 +1,1 @@
+enum Dir2D { up, down, left, right }

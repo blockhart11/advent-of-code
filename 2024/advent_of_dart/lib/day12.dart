@@ -1,40 +1,35 @@
+import 'package:advent_of_dart/utils/direction.dart';
+
 class EdgeVisitor {
   bool up = false;
   bool down = false;
   bool right = false;
   bool left = false;
 
-  void set(Direction dir) {
+  void set(Dir2D dir) {
     switch (dir) {
-      case Direction.up:
+      case Dir2D.up:
         up = true;
-      case Direction.right:
+      case Dir2D.right:
         right = true;
-      case Direction.down:
+      case Dir2D.down:
         down = true;
-      case Direction.left:
+      case Dir2D.left:
         left = true;
     }
   }
 
-  bool visited(Direction dir) {switch (dir) {
-      case Direction.up:
+  bool visited(Dir2D dir) {switch (dir) {
+      case Dir2D.up:
         return up;
-      case Direction.right:
+      case Dir2D.right:
         return right;
-      case Direction.down:
+      case Dir2D.down:
         return down;
-      case Direction.left:
+      case Dir2D.left:
         return left;
     }
   }
-}
-
-enum Direction {
-  up,
-  down,
-  left,
-  right;
 }
 
 class Plot {
@@ -99,28 +94,28 @@ class Plot {
       if (!nodes[node]!.up) {
         if (!nodes.containsKey((node.$1 - 1, node.$2))) {
           // top edge detected
-          result += walkEdge(node, Direction.up);
+          result += walkEdge(node, Dir2D.up);
         }
       }
       // right
       if (!nodes[node]!.right) {
         if (!nodes.containsKey((node.$1, node.$2 + 1))) {
           // bottom edge detected
-          result += walkEdge(node, Direction.right);
+          result += walkEdge(node, Dir2D.right);
         }
       }
       // down
       if (!nodes[node]!.down) {
         if (!nodes.containsKey((node.$1 + 1, node.$2))) {
           // bottom edge detected
-          result += walkEdge(node, Direction.down);
+          result += walkEdge(node, Dir2D.down);
         }
       }
       // left
       if (!nodes[node]!.left) {
         if (!nodes.containsKey((node.$1, node.$2 - 1))) {
           // left edge detected
-          result += walkEdge(node, Direction.left);
+          result += walkEdge(node, Dir2D.left);
         }
       }
     }
@@ -130,62 +125,62 @@ class Plot {
     return result;
   }
 
-  int walkEdge((int, int) node, Direction edge) {
+  int walkEdge((int, int) node, Dir2D edge) {
     if (nodes[node]!.visited(edge)) return 0;
     nodes[node]!.set(edge);
 
     switch (edge) {
-      case Direction.up:
+      case Dir2D.up:
         if (nodes.containsKey((node.$1, node.$2+1))) { // has right neighbor
           if (nodes.containsKey((node.$1-1, node.$2+1))) { // upper right neighbor
             // inner corner. follow left edge up.
-            return 1 + walkEdge((node.$1-1, node.$2+1), Direction.left);
+            return 1 + walkEdge((node.$1-1, node.$2+1), Dir2D.left);
           } else {
             // continue right along upper edge
             return walkEdge((node.$1, node.$2+1), edge);
           }
         } else {
           // outer corner. stay on same node, follow right edge
-          return 1 + walkEdge(node, Direction.right);
+          return 1 + walkEdge(node, Dir2D.right);
         }
-      case Direction.right:
+      case Dir2D.right:
         if (nodes.containsKey((node.$1+1, node.$2))) { // has lower neighbor
           if (nodes.containsKey((node.$1+1, node.$2+1))) { // lower right neighbor
             // inner corner. follow upper edge to the right.
-            return 1 + walkEdge((node.$1+1, node.$2+1), Direction.up);
+            return 1 + walkEdge((node.$1+1, node.$2+1), Dir2D.up);
           } else {
             // continue down along right edge
             return walkEdge((node.$1+1, node.$2), edge);
           }
         } else {
           // outer corner. stay on same node, follow lower edge
-          return 1 + walkEdge(node, Direction.down);
+          return 1 + walkEdge(node, Dir2D.down);
         }
-      case Direction.down:
+      case Dir2D.down:
         if (nodes.containsKey((node.$1, node.$2-1))) { // has left neighbor
           if (nodes.containsKey((node.$1+1, node.$2-1))) { // lower left neighbor
             // inner corner. follow right edge down.
-            return 1 + walkEdge((node.$1+1, node.$2-1), Direction.right);
+            return 1 + walkEdge((node.$1+1, node.$2-1), Dir2D.right);
           } else {
             // continue along lower edge
             return walkEdge((node.$1, node.$2-1), edge);
           }
         } else {
           // outer corner. stay on same node, follow left edge
-          return 1 + walkEdge(node, Direction.left);
+          return 1 + walkEdge(node, Dir2D.left);
         }
-      case Direction.left:
+      case Dir2D.left:
         if (nodes.containsKey((node.$1-1, node.$2))) { // has upper neighbor
           if (nodes.containsKey((node.$1-1, node.$2-1))) { // upper left neighbor
             // inner corner. follow lower edge left.
-            return 1 + walkEdge((node.$1-1, node.$2-1), Direction.down);
+            return 1 + walkEdge((node.$1-1, node.$2-1), Dir2D.down);
           } else {
             // continue along left edge
             return walkEdge((node.$1-1, node.$2), edge);
           }
         } else {
           // outer corner. stay on same node, follow upper edge
-          return 1 + walkEdge(node, Direction.up);
+          return 1 + walkEdge(node, Dir2D.up);
         }
     }
   }
