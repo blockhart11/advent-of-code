@@ -45,10 +45,10 @@ Future<void> calculate(String day,
 
     final result =
         mirror.invoke(Symbol('day$day$part'), [lines.sublist(1)]).reflectee;
-    print('Test run of day $day, part $part: expected $expect, got $result');
+    print('Test run of day $day, part $part: expected $expect, got ${result != -1 ? result : 'whatever was printed above ^'}');
   } else {
     final result = mirror.invoke(Symbol('day$day$part'), [lines]).reflectee;
-    print('Day $day, part $part result: $result');
+    print('Day $day, part $part result: ${result != -1 ? result : 'whatever was printed above ^'}');
   }
 }
 
