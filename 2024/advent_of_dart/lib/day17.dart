@@ -22,7 +22,7 @@ class Computer {
     // run compiled program
     List<int> out = [];
     int outTracker = 0;
-    int rAStart = rA;
+    // int rAStart = rA;
     // print(
     //     'running program $program with starting registers\nA: $rA\nB: $rB\nC: $rC');
 
@@ -100,7 +100,7 @@ class Computer {
 mixin Day17 {
   int day17a(List<String> lines) {
     int result = 0;
-    final a = int.parse(lines[0].substring(12));
+    // final a = int.parse(lines[0].substring(12));
     final b = int.parse(lines[1].substring(12));
     final c = int.parse(lines[2].substring(12));
     final program = lines[4].substring(9);

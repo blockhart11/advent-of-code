@@ -9,7 +9,7 @@
             "cwd": "2024\\advent_of_dart",
             "request": "launch",
             "type": "dart",
-            "args": ["16", "-t"]
+            "args": ["20", "-tb"]
         }
     ]
 }

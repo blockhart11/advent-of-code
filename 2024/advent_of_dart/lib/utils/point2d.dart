@@ -30,6 +30,11 @@ class Point2D {
     return x == other.x && y == other.y;
   }
 
+  // distance returns absolute value of horizontal distance + vertical distance
+  int distance(Point2D other) {
+    return (x-other.x).abs() + (y-other.y).abs();
+  }
+
   @override
   String toString() {
     return '($x,$y)';
