@@ -26,6 +26,10 @@ class Point2D {
     this.y = y;
   }
 
+  bool equals(Point2D other) {
+    return x == other.x && y == other.y;
+  }
+
   @override
   String toString() {
     return '($x,$y)';
