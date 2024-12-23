@@ -80,49 +80,35 @@ class Controller {
   String name;
   Key pos = Key.kA;
   Controller? controller;
-  Map<Key, Map<Key, List<String>>> pad;
+  Map<Key, Map<Key, String>> pad;
+  Map<(Key, Key), int> cache = {};
 
   Controller(this.name, this.pad, [this.controller]);
 
-  // TODO - Cache this shit!
   int moveAndPress(List<Key> keys) {
-    pos = Key.kA;
-
     if (controller == null) {
-      // print('$name enters sequence: ${keys.map((e) => keyToString(e)).join('')} in ${keys.length} moves');
+      // print('$name presses ${keys.map((e) => keyToString(e)).join()}');
       return keys.length;
     }
 
-    // print('$name is requesting button sequence: ${keys.map((e) => keyToString(e)).join('')}');
-    print('$name is requesting a long (${keys.length}) button sequence');
-    List<List<Key>> moveListOpts = [[]];
+    int result = 0;
+
     for (final key in keys) {
-      final opts = pad[pos]![key]!;
-      if (opts.length == 2) {
-        print('$name: 2 options found from $pos to $key: $opts -- trying both...');
-        List<List<Key>> clonedOpts = [];
-        for (final moveListOpt in moveListOpts) {
-          List<Key> newOpt = List.from(moveListOpt);
-          newOpt.addAll(opts[1].split('').map((e) => toKey(e)).toList());
-          newOpt.add(Key.kA);
-          clonedOpts.add(newOpt);
-          moveListOpt.addAll(opts[0].split('').map((e) => toKey(e)).toList());
-          moveListOpt.add(Key.kA);
-        }
-        moveListOpts.addAll(clonedOpts);
-      } else if (opts.length == 1) {
-        for (final moveListOpt in moveListOpts) {
-          moveListOpt.addAll(opts[0].split('').map((e) => toKey(e)).toList());
-          moveListOpt.add(Key.kA);
-        }
+      String moves = pad[pos]![key]! + keyToString(Key.kA);
+      // print('$name move ${keyToString(pos)} -> ${keyToString(key)} as $moves');
+      if (cache.containsKey((pos, key))) {
+        // print('$name cache hit with cost ${cache[(pos, key)]!}');
+        result += cache[(pos, key)]!;
+        pos = key;
+        continue;
       }
+      final nextKeys = moves.split('').map((e) => toKey(e)).toList();
+      cache[(pos, key)] = controller!.moveAndPress(nextKeys);
+      result += cache[(pos, key)]!;
       pos = key;
     }
-    int best = 10000000000;
-    for (final moveList in moveListOpts) {
-      best = min(best, controller!.moveAndPress(moveList));
-    }
-    return best;
+
+    return result;
   }
 }
 
@@ -144,12 +130,14 @@ mixin Day21 {
       final numMoves = robot1.moveAndPress(keys);
 
       // add to result
+      print('cost: $numMoves');
       result += numMoves * int.parse(line.substring(0, 3));
     }
 
     return result;
-    // 161323 is too high
     // 157908 was correct
+    // expect <v<A>>^AvA^A<vA<AA>>^AAvA<^A>AAvA^A<vA>^AA<A>A<v<A>A>^AAAvA<^A>A
+    // actual v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA^<A>Av<A^>AA<A>Av<A<A>>^AAA<Av>A^A
   }
 
   int day21b(List<String> lines) {
@@ -192,247 +180,194 @@ mixin Day21 {
       final numMoves = r0.moveAndPress(keys);
 
       // add to result
+      print('cost: $numMoves');
       result += numMoves * int.parse(line.substring(0, 3));
     }
     return result;
+    // when internet, try 196910339808654
   }
 }
 
-const Map<Key, Map<Key, List<String>>> numPad = {
+const Map<Key, Map<Key, String>> numPad = {
   Key.kA: {
-    Key.k0: ['<'],
-    Key.k1: ['^<<'],
-    Key.k2: ['<^'],
-    // Key.k2: ['<^', '^<'],
-    Key.k3: ['^'],
-    Key.k4: ['^^<<'],
-    Key.k5: ['<^^'],
-    // Key.k5: ['<^^', '^^<'],
-    Key.k6: ['^^'],
-    Key.k7: ['^^^<<'],
-    Key.k8: ['<^^^'],
-    // Key.k8: ['<^^^', '^^^<'],
-    Key.k9: ['^^^'],
-    Key.kA: [''],
+    Key.k0: '<',
+    Key.k1: '^<<',
+    Key.k2: '<^',
+    Key.k3: '^',
+    Key.k4: '^^<<',
+    Key.k5: '<^^',
+    Key.k6: '^^',
+    Key.k7: '^^^<<',
+    Key.k8: '<^^^',
+    Key.k9: '^^^',
+    Key.kA: '',
   },
   Key.k0: {
-    Key.k0: [''],
-    Key.k1: ['^<'],
-    Key.k2: ['^'],
-    Key.k3: ['^>'],
-    // Key.k3: ['>^', '^>'],
-    Key.k4: ['^^<'],
-    Key.k5: ['^^'],
-    Key.k6: ['^^>'],
-    // Key.k6: ['>^^', '^^>'],
-    Key.k7: ['^^^<'],
-    Key.k8: ['^^^'],
-    Key.k9: ['^^^>'],
-    // Key.k9: ['>^^^', '^^^>'],
-    Key.kA: ['>'],
+    Key.k0: '',
+    Key.k1: '^<',
+    Key.k2: '^',
+    Key.k3: '^>',
+    Key.k4: '^^<',
+    Key.k5: '^^',
+    Key.k6: '^^>',
+    Key.k7: '^^^<',
+    Key.k8: '^^^',
+    Key.k9: '^^^>',
+    Key.kA: '>',
   },
   Key.k1: {
-    Key.k0: ['>v'],
-    Key.k1: [''],
-    Key.k2: ['>'],
-    Key.k3: ['>>'],
-    Key.k4: ['^'],
-    Key.k5: ['^>'],
-    // Key.k5: ['>^', '^>'],
-    Key.k6: ['^>>'],
-    // Key.k6: ['>>^', '^>>'],
-    Key.k7: ['^^'],
-    Key.k8: ['^^>'],
-    // Key.k8: ['>^^', '^^>'],
-    Key.k9: ['^^>>'],
-    // Key.k9: ['>>^^', '^^>>'],
-    Key.kA: ['>>v'],
+    Key.k0: '>v',
+    Key.k1: '',
+    Key.k2: '>',
+    Key.k3: '>>',
+    Key.k4: '^',
+    Key.k5: '^>',
+    Key.k6: '^>>',
+    Key.k7: '^^',
+    Key.k8: '^^>',
+    Key.k9: '^^>>',
+    Key.kA: '>>v',
   },
   Key.k2: {
-    Key.k0: ['v'],
-    Key.k1: ['<'],
-    Key.k2: [''],
-    Key.k3: ['>'],
-    Key.k4: ['<^'],
-    // Key.k4: ['<^', '^<'],
-    Key.k5: ['^'],
-    Key.k6: ['^>'],
-    // Key.k6: ['>^', '^>'],
-    Key.k7: ['<^^'],
-    // Key.k7: ['<^^', '^^<'],
-    Key.k8: ['^^'],
-    Key.k9: ['^^>'],
-    // Key.k9: ['>^^', '^^>'],
-    Key.kA: ['v>'],
-    // Key.kA: ['>v', 'v>'],
+    Key.k0: 'v',
+    Key.k1: '<',
+    Key.k2: '',
+    Key.k3: '>',
+    Key.k4: '<^',
+    Key.k5: '^',
+    Key.k6: '^>',
+    Key.k7: '<^^',
+    Key.k8: '^^',
+    Key.k9: '^^>',
+    Key.kA: 'v>',
   },
   Key.k3: {
-    Key.k0: ['<v'],
-    // Key.k0: ['<v', 'v<'],
-    Key.k1: ['<<'],
-    Key.k2: ['<'],
-    Key.k3: [''],
-    Key.k4: ['<<^'],
-    // Key.k4: ['<<^', '^<<'],
-    Key.k5: ['<^'],
-    // Key.k5: ['<^', '^<'],
-    Key.k6: ['^'],
-    Key.k7: ['<<^^'],
-    // Key.k7: ['<<^^', '^^<<'],
-    Key.k8: ['<^^'],
-    // Key.k8: ['<^^', '^^<'],
-    Key.k9: ['^^'],
-    Key.kA: ['v'],
+    Key.k0: '<v',
+    Key.k1: '<<',
+    Key.k2: '<',
+    Key.k3: '',
+    Key.k4: '<<^',
+    Key.k5: '<^',
+    Key.k6: '^',
+    Key.k7: '<<^^',
+    Key.k8: '<^^',
+    Key.k9: '^^',
+    Key.kA: 'v',
   },
   Key.k4: {
-    Key.k0: ['>vv'],
-    Key.k1: ['v'],
-    Key.k2: ['v>'],
-    // Key.k2: ['>v', 'v>'],
-    Key.k3: ['v>>'],
-    // Key.k3: ['>>v', 'v>>'],
-    Key.k4: [''],
-    Key.k5: ['>'],
-    Key.k6: ['>>'],
-    Key.k7: ['^'],
-    Key.k8: ['^>'],
-    // Key.k8: ['>^', '^>'],
-    Key.k9: ['^>>'],
-    // Key.k9: ['>>^', '^>>'],
-    Key.kA: ['>>vv'],
+    Key.k0: '>vv',
+    Key.k1: 'v',
+    Key.k2: 'v>',
+    Key.k3: 'v>>',
+    Key.k4: '',
+    Key.k5: '>',
+    Key.k6: '>>',
+    Key.k7: '^',
+    Key.k8: '^>',
+    Key.k9: '^>>',
+    Key.kA: '>>vv',
   },
   Key.k5: {
-    Key.k0: ['vv'],
-    Key.k1: ['<v'],
-    // Key.k1: ['<v', 'v<'],
-    Key.k2: ['v'],
-    Key.k3: ['v>'],
-    // Key.k3: ['>v', 'v>'],
-    Key.k4: ['<'],
-    Key.k5: [''],
-    Key.k6: ['>'],
-    Key.k7: ['<^'],
-    // Key.k7: ['<^', '^<'],
-    Key.k8: ['^'],
-    Key.k9: ['^>'],
-    // Key.k9: ['>^', '^>'],
-    Key.kA: ['vv>'],
-    // Key.kA: ['>vv', 'vv>'],
+    Key.k0: 'vv',
+    Key.k1: '<v',
+    Key.k2: 'v',
+    Key.k3: 'v>',
+    Key.k4: '<',
+    Key.k5: '',
+    Key.k6: '>',
+    Key.k7: '<^',
+    Key.k8: '^',
+    Key.k9: '^>',
+    Key.kA: 'vv>',
   },
   Key.k6: {
-    Key.k0: ['<vv'],
-    // Key.k0: ['<vv', 'vv<'],
-    Key.k1: ['<<v'],
-    // Key.k1: ['<<v', 'v<<'],
-    Key.k2: ['<v'],
-    // Key.k2: ['<v', 'v<'],
-    Key.k3: ['v'],
-    Key.k4: ['<<'],
-    Key.k5: ['<'],
-    Key.k6: [''],
-    Key.k7: ['<<^'],
-    // Key.k7: ['<<^', '^<<'],
-    Key.k8: ['<^'],
-    // Key.k8: ['<^', '^<'],
-    Key.k9: ['^'],
-    Key.kA: ['vv'],
+    Key.k0: '<vv',
+    Key.k1: '<<v',
+    Key.k2: '<v',
+    Key.k3: 'v',
+    Key.k4: '<<',
+    Key.k5: '<',
+    Key.k6: '',
+    Key.k7: '<<^',
+    Key.k8: '<^',
+    Key.k9: '^',
+    Key.kA: 'vv',
   },
   Key.k7: {
-    Key.k0: ['>vvv'],
-    Key.k1: ['vv'],
-    Key.k2: ['vv>'],
-    // Key.k2: ['>vv', 'vv>'],
-    Key.k3: ['vv>>'],
-    // Key.k3: ['>>vv', 'vv>>'],
-    Key.k4: ['v'],
-    Key.k5: ['v>'],
-    // Key.k5: ['>v', 'v>'],
-    Key.k6: ['v>>'],
-    // Key.k6: ['>>v', 'v>>'],
-    Key.k7: [''],
-    Key.k8: ['>'],
-    Key.k9: ['>>'],
-    Key.kA: ['>>vvv'],
+    Key.k0: '>vvv',
+    Key.k1: 'vv',
+    Key.k2: 'vv>',
+    Key.k3: 'vv>>',
+    Key.k4: 'v',
+    Key.k5: 'v>',
+    Key.k6: 'v>>',
+    Key.k7: '',
+    Key.k8: '>',
+    Key.k9: '>>',
+    Key.kA: '>>vvv',
   },
   Key.k8: {
-    Key.k0: ['vvv'],
-    Key.k1: ['<vv'],
-    // Key.k1: ['<vv', 'vv<'],
-    Key.k2: ['vv'],
-    Key.k3: ['vv>'],
-    // Key.k3: ['>vv', 'vv>'],
-    Key.k4: ['<v'],
-    // Key.k4: ['<v', 'v<'],
-    Key.k5: ['v'],
-    Key.k6: ['v>'],
-    // Key.k6: ['>v', 'v>'],
-    Key.k7: ['<'],
-    Key.k8: [''],
-    Key.k9: ['>'],
-    Key.kA: ['vvv>'],
-    // Key.kA: ['>vvv', 'vvv>'],
+    Key.k0: 'vvv',
+    Key.k1: '<vv',
+    Key.k2: 'vv',
+    Key.k3: 'vv>',
+    Key.k4: '<v',
+    Key.k5: 'v',
+    Key.k6: 'v>',
+    Key.k7: '<',
+    Key.k8: '',
+    Key.k9: '>',
+    Key.kA: 'vvv>',
   },
   Key.k9: {
-    Key.k0: ['<vvv'],
-    // Key.k0: ['<vvv', 'vvv<'],
-    Key.k1: ['<<vv'],
-    // Key.k1: ['<<vv', 'vv<<'],
-    Key.k2: ['<vv'],
-    // Key.k2: ['<vv', 'vv<'],
-    Key.k3: ['vv'],
-    Key.k4: ['<<v'],
-    // Key.k4: ['<<v', 'v<<'],
-    Key.k5: ['<v'],
-    // Key.k5: ['<v', 'v<'],
-    Key.k6: ['v'],
-    Key.k7: ['<<'],
-    Key.k8: ['<'],
-    Key.k9: [''],
-    Key.kA: ['vvv'],
+    Key.k0: '<vvv',
+    Key.k1: '<<vv',
+    Key.k2: '<vv',
+    Key.k3: 'vv',
+    Key.k4: '<<v',
+    Key.k5: '<v',
+    Key.k6: 'v',
+    Key.k7: '<<',
+    Key.k8: '<',
+    Key.k9: '',
+    Key.kA: 'vvv',
   }
 };
 
-const Map<Key, Map<Key, List<String>>> arrowPad = {
+const Map<Key, Map<Key, String>> arrowPad = {
   Key.kA: {
-    Key.kA: [''],
-    Key.kU: ['<'],
-    Key.kR: ['v'],
-    // Key.kD: ['<v', 'v<'],
-    Key.kD: ['<v'],
-    Key.kL: ['v<<'],
+    Key.kA: '',
+    Key.kU: '<',
+    Key.kR: 'v',
+    Key.kD: '<v',
+    Key.kL: 'v<<',
   },
   Key.kU: {
-    Key.kA: ['>'],
-    Key.kU: [''],
-    // Key.kR: ['v>', '>v'],
-    Key.kR: ['v>'],
-    Key.kD: ['v'],
-    Key.kL: ['v<'],
+    Key.kA: '>',
+    Key.kU: '',
+    Key.kR: 'v>',
+    Key.kD: 'v',
+    Key.kL: 'v<',
   },
   Key.kR: {
-    Key.kA: ['^'],
-    // Key.kU: ['<^', '^<'],
-    Key.kU: ['<^'],
-    Key.kR: [''],
-    Key.kD: ['<'],
-    Key.kL: ['<<'],
+    Key.kA: '^',
+    Key.kU: '<^',
+    Key.kR: '',
+    Key.kD: '<',
+    Key.kL: '<<',
   },
   Key.kD: {
-    // Key.kA: ['^>', '>^'],
-    Key.kA: ['^>'],
-    Key.kU: ['^'],
-    Key.kR: ['>'],
-    Key.kD: [''],
-    Key.kL: ['<'],
+    Key.kA: '^>',
+    Key.kU: '^',
+    Key.kR: '>',
+    Key.kD: '',
+    Key.kL: '<',
   },
   Key.kL: {
-    Key.kA: ['>>^'],
-    Key.kU: ['>^'],
-    Key.kR: ['>>'],
-    Key.kD: ['>'],
-    Key.kL: [''],
+    Key.kA: '>>^',
+    Key.kU: '>^',
+    Key.kR: '>>',
+    Key.kD: '>',
+    Key.kL: '',
   }
 };
-
-// expect <v<A>>^AvA^A<vA<AA>>^AAvA<^A>AAvA^A<vA>^AA<A>A<v<A>A>^AAAvA<^A>A
-// actual v<<A>>^AvA^Av<<A>>^AAv<A<A>>^AAvAA^<A>Av<A^>AA<A>Av<A<A>>^AAA<Av>A^A
