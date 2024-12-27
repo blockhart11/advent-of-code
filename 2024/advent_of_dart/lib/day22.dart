@@ -1,72 +1,79 @@
+import 'dart:collection';
+
+const prune = 16777216;
+
 mixin Day22 {
   int day22a(List<String> lines) {
     int result = 0;
 
-    // do the thing
+    for (final line in lines) {
+      int next = int.parse(line);
+      for (int i = 0; i < 2000; i++) {
+        next = secretNumber(next);
+      }
+      print('$line: $next');
+      result += next;
+    }
 
     return result;
+  }
+
+  int secretNumber(int input) {
+    //     Calculate the result of multiplying the secret number by 64. Then, mix this result into the secret number. Finally, prune the secret number.
+    int result = ((input * 64) ^ input) % prune;
+    // Calculate the result of dividing the secret number by 32. Round the result down to the nearest integer. Then, mix this result into the secret number. Finally, prune the secret number.
+    result = ((result ~/ 32) ^ result) % prune;
+    // Calculate the result of multiplying the secret number by 2048. Then, mix this result into the secret number. Finally, prune the secret number.
+    return ((result * 2048) ^ result) % prune;
   }
 
   int day22b(List<String> lines) {
-    int result = 0;
+    Map<(int, int, int, int), Map<int, int>> c = {};
 
-    // do the thing
+    for (int id = 0; id < lines.length; id++) {
+      int cur = int.parse(lines[id]); // first secret number
+      Queue<int> sequence = Queue();
+      int i = 0;
+      while (i < 4) { // seed the change list with the next 4 numbers
+        final next = secretNumber(cur);
+        sequence.add(next%10 - cur%10);
+        cur = next;
+        i++;
+      }
+      updateCache(c, sequence, id, cur%10);
 
-    return result;
+      while (i < 2000) {
+        final next = secretNumber(cur);
+        sequence.add(next%10-cur%10);
+        sequence.removeFirst();
+        updateCache(c, sequence, id, next%10);
+        cur = next;
+        i++;
+      }
+    }
+
+    // find best result in map
+    ((int, int, int, int), int) best = ((0,0,0,0), -1);
+    for (final entry in c.entries) {
+      final score = entry.value.values.fold(0, (prev, next) => prev + next);
+      if (score > best.$2) {
+        best = ((entry.key), score);
+      }
+    }
+
+    print(best);
+
+    return best.$2;
+  }
+
+  void updateCache(Map<(int, int, int, int), Map<int, int>> c, Queue q, int id, int val) {
+    (int, int, int, int) key = (q.elementAt(0), q.elementAt(1), q.elementAt(2), q.elementAt(3));
+    Map<int, int>? cVal = c[key];
+    if (cVal == null) {
+      c[key] = {id: val};
+    } else {
+      if (cVal.containsKey(id)) return; // we've already seen this sequence for this number.
+      cVal[id] = val;
+    }
   }
 }
-
-/*
-As you're all teleported deep into the jungle, a monkey steals The Historians' device! You'll need get it back while The Historians are looking for the Chief.
-
-The monkey that stole the device seems willing to trade it, but only in exchange for an absurd number of bananas. Your only option is to buy bananas on the Monkey Exchange Market.
-
-You aren't sure how the Monkey Exchange Market works, but one of The Historians senses trouble and comes over to help. Apparently, they've been studying these monkeys for a while and have deciphered their secrets.
-
-Today, the Market is full of monkeys buying good hiding spots. Fortunately, because of the time you recently spent in this jungle, you know lots of good hiding spots you can sell! If you sell enough hiding spots, you should be able to get enough bananas to buy the device back.
-
-On the Market, the buyers seem to use random prices, but their prices are actually only pseudorandom! If you know the secret of how they pick their prices, you can wait for the perfect time to sell.
-
-The part about secrets is literal, the Historian explains. Each buyer produces a pseudorandom sequence of secret numbers where each secret is derived from the previous.
-
-In particular, each buyer's secret number evolves into the next secret number in the sequence via the following process:
-
-Calculate the result of multiplying the secret number by 64. Then, mix this result into the secret number. Finally, prune the secret number.
-Calculate the result of dividing the secret number by 32. Round the result down to the nearest integer. Then, mix this result into the secret number. Finally, prune the secret number.
-Calculate the result of multiplying the secret number by 2048. Then, mix this result into the secret number. Finally, prune the secret number.
-Each step of the above process involves mixing and pruning:
-
-To mix a value into the secret number, calculate the bitwise XOR of the given value and the secret number. Then, the secret number becomes the result of that operation. (If the secret number is 42 and you were to mix 15 into the secret number, the secret number would become 37.)
-To prune the secret number, calculate the value of the secret number modulo 16777216. Then, the secret number becomes the result of that operation. (If the secret number is 100000000 and you were to prune the secret number, the secret number would become 16113920.)
-After this process completes, the buyer is left with the next secret number in the sequence. The buyer can repeat this process as many times as necessary to produce more secret numbers.
-
-So, if a buyer had a secret number of 123, that buyer's next ten secret numbers would be:
-
-15887950
-16495136
-527345
-704524
-1553684
-12683156
-11100544
-12249484
-7753432
-5908254
-Each buyer uses their own secret number when choosing their price, so it's important to be able to predict the sequence of secret numbers for each buyer. Fortunately, the Historian's research has uncovered the initial secret number of each buyer (your puzzle input). For example:
-
-1
-10
-100
-2024
-This list describes the initial secret number of four different secret-hiding-spot-buyers on the Monkey Exchange Market. If you can simulate secret numbers from each buyer, you'll be able to predict all of their future prices.
-
-In a single day, buyers each have time to generate 2000 new secret numbers. In this example, for each buyer, their initial secret number and the 2000th new secret number they would generate are:
-
-1: 8685429
-10: 4700978
-100: 15273692
-2024: 8667524
-Adding up the 2000th new secret number for each buyer produces 37327623.
-
-For each buyer, simulate the creation of 2000 new secret numbers. What is the sum of the 2000th secret number generated by each buyer?
-*/
