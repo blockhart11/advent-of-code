@@ -1,0 +1,688 @@
+z:   1100110010111101011100001101110011111100100110     56278503604006
+
+rules:
+* All z gates must be XOR (except the last one is OR)
+* All carry gates must be OR
+* Every x and y wire will go into 2 gates
+** XOR gate with an out leading to two gates, one XOR -> z and one AND -> OR (same or as below)
+** AND gate with an out leading to OR gate
+
+
+***ERRORS***
+frf XOR mmp -> dhg
+nvf OR jvk -> z06
+
+cmb AND fmm -> z23
+fmm XOR cmb -> bhd
+
+x38 AND y38 -> z38
+nfb XOR dfg -> nbf
+
+x11 XOR y11 -> dpd
+x11 AND y11 -> brk
+
+*********************************************************
+SOLUTION: bhd,brk,dhg,dpd,nbf,z06,z23,z38
+*********************************************************
+
+***WIRES***
+- 0 -
+x00 XOR y00 -> z00
+x00 AND y00 -> fhd  *c00
+
+- 1 -
+x01 XOR y01 -> hbw
+hbw XOR fhd -> z01
+hbw AND fhd -> jjg
+x01 AND y01 -> kkp
+jjg OR kkp -> csn   *c01
+
+- 2 -
+x02 XOR y02 -> ddq
+ddq XOR csn -> z02
+ddq AND csn -> ssn
+x02 AND y02 -> jns
+ssn OR jns -> hct   *c02
+
+- 3 -
+x03 XOR y03 -> gsr
+hct XOR gsr -> z03
+hct AND gsr -> bsv
+x03 AND y03 -> rjn
+bsv OR rjn -> sgf   *c03
+
+- 4 -
+x04 XOR y04 -> ckp
+sgf XOR ckp -> z04
+sgf AND ckp -> vft
+x04 AND y04 -> qbn
+vft OR qbn -> jmc   *c04
+
+- 5 -
+x05 XOR y05 -> rdw
+rdw XOR jmc -> z05
+rdw AND jmc -> jpw
+x05 AND y05 -> mqf
+mqf OR jpw -> mmp   *c05
+
+- 6 -                           ERROR
+x06 XOR y06 -> frf
+frf XOR mmp -> dhg  ***ERROR***
+mmp AND frf -> jvk
+x06 AND y06 -> nvf
+nvf OR jvk -> z06   ***ERROR***
+
+- 7 -
+x07 XOR y07 -> kwn
+x07 AND y07 -> tcs
+
+- 8 -
+x08 XOR y08 -> cbg
+x08 AND y08 -> mtp
+
+- 9 -
+x09 XOR y09 -> pmc
+x09 AND y09 -> cpf
+
+- 10 -
+x10 XOR y10 -> cfw
+cfw XOR dds -> z10
+cfw AND dds -> wjj
+x10 AND y10 -> cwp
+cwp OR wjj -> dqp
+
+- 11 -                          ERROR
+x11 XOR y11 -> dpd  ***ERROR***
+dqp XOR brk -> z11
+dqp AND brk -> cgn
+x11 AND y11 -> brk  ***ERROR***
+dpd OR cgn -> krq
+
+- 12 - OK
+x12 XOR y12 -> hpg
+krq XOR hpg -> z12
+hpg AND krq -> brp
+x12 AND y12 -> bcg
+brp OR bcg -> htq
+
+- 13 - OK
+x13 XOR y13 -> hfd
+htq XOR hfd -> z13
+hfd AND htq -> jwg
+x13 AND y13 -> fjs
+fjs OR jwg -> qtc
+
+- 14 - OK
+x14 XOR y14 -> hgh
+qtc XOR hgh -> z14
+qtc AND hgh -> kdb
+x14 AND y14 -> cnm
+cnm OR kdb -> nhw
+
+- 15 - OK
+x15 XOR y15 -> pfm
+pfm XOR nhw -> z15
+nhw AND pfm -> brq
+x15 AND y15 -> wrn
+wrn OR brq -> vpw
+
+- 16 - OK
+x16 XOR y16 -> mdk
+vpw XOR mdk -> z16
+vpw AND mdk -> vpt
+x16 AND y16 -> hnb
+hnb OR vpt -> qpf
+
+- 17 -
+x17 XOR y17 -> gqf
+qpf XOR gqf -> z17
+gqf AND qpf -> jpc
+x17 AND y17 -> cjd
+jpc OR cjd -> mjh
+
+- 18 - OK
+x18 XOR y18 -> rdr
+mjh XOR rdr -> z18
+rdr AND mjh -> kpd
+x18 AND y18 -> wpq
+wpq OR kpd -> ttj
+
+- 19 - OK
+x19 XOR y19 -> fkh
+fkh XOR ttj -> z19
+ttj AND fkh -> hsv
+x19 AND y19 -> mss
+hsv OR mss -> smm
+
+- 20 - OK
+x20 XOR y20 -> pnh
+smm XOR pnh -> z20
+smm AND pnh -> cbq
+x20 AND y20 -> wnv
+wnv OR cbq -> mmj
+
+- 21 - OK
+x21 XOR y21 -> cqh
+mmj XOR cqh -> z21
+mmj AND cqh -> scp
+x21 AND y21 -> fnj
+scp OR fnj -> vdm
+
+- 22 - OK
+x22 XOR y22 -> qhv
+vdm XOR qhv -> z22
+vdm AND qhv -> sbj
+x22 AND y22 -> bff
+bff OR sbj -> fmm   *c22
+
+- 23 -                      ERROR
+x23 XOR y23 -> cmb
+fmm XOR cmb -> bhd  ***ERROR***
+x23 AND y23 -> gjg
+cmb AND fmm -> z23  ***ERROR***
+bhd OR gjg -> vcn
+
+- 24 - OK
+x24 XOR y24 -> grp
+grp XOR vcn -> z24
+vcn AND grp -> dhd
+x24 AND y24 -> csr
+dhd OR csr -> vks
+
+- 25 - OK
+x25 XOR y25 -> wcb
+wcb XOR vks -> z25
+wcb AND vks -> wng
+x25 AND y25 -> qqq
+qqq OR wng -> pmw
+
+- 26 - OK
+x26 XOR y26 -> nkv
+pmw XOR nkv -> z26
+pmw AND nkv -> vdp
+x26 AND y26 -> stm
+stm OR vdp -> trb
+
+- 27 - OK
+x27 XOR y27 -> vkf
+vkf XOR trb -> z27
+vkf AND trb -> ssf
+x27 AND y27 -> khd
+ssf OR khd -> qqr
+
+- 28 - OK
+x28 XOR y28 -> bps
+qqr XOR bps -> z28
+bps AND qqr -> cqq
+x28 AND y28 -> hkm
+hkm OR cqq -> cqr
+
+- 29 - OK
+x29 XOR y29 -> nhb
+cqr XOR nhb -> z29
+cqr AND nhb -> fdf
+x29 AND y29 -> tgg
+tgg OR fdf -> kts
+
+- 30 - OK
+x30 XOR y30 -> mbb
+mbb XOR kts -> z30
+kts AND mbb -> cfr
+x30 AND y30 -> pww
+cfr OR pww -> fsn
+
+- 31 - OK
+x31 XOR y31 -> jvs
+jvs XOR fsn -> z31
+jvs AND fsn -> nqb
+x31 AND y31 -> pkq
+pkq OR nqb -> cbw
+
+- 32 - OK
+x32 XOR y32 -> wjn
+wjn XOR cbw -> z32
+cbw AND wjn -> sjw
+x32 AND y32 -> vtc
+vtc OR sjw -> mtd
+
+- 33 - OK
+x33 XOR y33 -> vrp
+mtd XOR vrp -> z33
+mtd AND vrp -> pmt
+x33 AND y33 -> rsb
+pmt OR rsb -> qsj
+
+- 34 - OK
+x34 XOR y34 -> ktj
+qsj XOR ktj -> z34
+ktj AND qsj -> pws
+x34 AND y34 -> fkp
+pws OR fkp -> dbp
+
+- 35 - OK
+x35 XOR y35 -> tgw
+dbp XOR tgw -> z35
+tgw AND dbp -> vms
+x35 AND y35 -> rfw
+rfw OR vms -> tng
+
+- 36 - OK
+x36 XOR y36 -> jgm
+tng XOR jgm -> z36
+jgm AND tng -> jbk
+x36 AND y36 -> gkv
+gkv OR jbk -> ntc
+
+- 37 - OK
+x37 XOR y37 -> twj
+ntc XOR twj -> z37
+twj AND ntc -> pjh
+x37 AND y37 -> nhv
+nhv OR pjh -> nfb
+
+- 38 -                      ERROR
+x38 XOR y38 -> dfg
+nfb XOR dfg -> nbf  ***ERROR***
+nfb AND dfg -> cdj
+x38 AND y38 -> z38  ***ERROR***
+cdj OR nbf -> hvf
+
+- 39 - OK
+x39 XOR y39 -> dpb
+hvf XOR dpb -> z39
+dpb AND hvf -> dbg
+x39 AND y39 -> mgj
+mgj OR dbg -> fqf
+
+- 40 - OK
+x40 XOR y40 -> rfm
+fqf XOR rfm -> z40
+fqf AND rfm -> gvs
+x40 AND y40 -> jcd
+jcd OR gvs -> smp
+
+- 41 - OK
+x41 XOR y41 -> twk
+twk XOR smp -> z41
+twk AND smp -> prv
+x41 AND y41 -> mvd
+prv OR mvd -> sqt
+
+- 42 - OK
+x42 XOR y42 -> gmb
+sqt XOR gmb -> z42
+sqt AND gmb -> rtr
+x42 AND y42 -> jwh
+rtr OR jwh -> mjf
+
+- 43 - OK
+x43 XOR y43 -> mrr
+mjf XOR mrr -> z43
+mjf AND mrr -> hnp
+x43 AND y43 -> sjk
+hnp OR sjk -> mjk
+
+- 44 - OK
+x44 XOR y44 -> jrm
+jrm XOR mjk -> z44
+jrm AND mjk -> nwf
+x44 AND y44 -> jth
+nwf OR jth -> z45
+
+
+***LEVEL 0***
+
+x41(0) ^ y41(1) --> twk(1)
+y22(1) ^ x22(1) --> qhv(0)
+y44(1) & x44(1) --> jth(1)
+y07(0) & x07(1) --> tcs(0)
+y11(1) ^ x11(1) --> dpd(0)
+y39(0) & x39(0) --> mgj(0)
+y32(0) ^ x32(0) --> wjn(0)
+y27(0) & x27(1) --> khd(0)
+x16(0) ^ y16(0) --> mdk(0)
+y05(0) & x05(0) --> mqf(0)
+y12(0) & x12(1) --> bcg(0)
+x15(1) & y15(0) --> wrn(0)
+x04(0) & y04(1) --> qbn(0)
+y03(1) ^ x03(1) --> gsr(0)
+y05(0) ^ x05(0) --> rdw(0)
+y06(0) ^ x06(1) --> frf(1)
+x23(0) & y23(0) --> gjg(0)
+x38(0) & y38(0) -------------> z38(0)
+y29(1) ^ x29(1) --> nhb(0)
+y37(0) & x37(1) --> nhv(0)
+x07(1) ^ y07(0) --> kwn(1)
+y28(0) ^ x28(1) --> bps(1)
+y01(0) & x01(0) --> kkp(0)
+y33(1) & x33(0) --> rsb(0)
+y40(1) & x40(0) --> jcd(0)
+x30(1) & y30(1) --> pww(1)
+x32(0) & y32(0) --> vtc(0)
+x25(1) ^ y25(0) --> wcb(1)
+y18(0) ^ x18(1) --> rdr(1)
+x00(1) & y00(1) --> fhd(1)
+y41(1) & x41(0) --> mvd(0)
+y34(1) & x34(0) --> fkp(0)
+y21(1) & x21(0) --> fnj(0)
+x25(1) & y25(0) --> qqq(0)
+y08(0) ^ x08(0) --> cbg(0)
+y21(1) ^ x21(0) --> cqh(1)
+y20(0) & x20(0) --> wnv(0)
+y06(0) & x06(1) --> nvf(0)
+x26(0) & y26(0) --> stm(0)
+y26(0) ^ x26(0) --> nkv(0)
+y43(0) ^ x43(1) --> mrr(1)
+y33(1) ^ x33(0) --> vrp(1)
+y09(0) & x09(1) --> cpf(0)
+y12(0) ^ x12(1) --> hpg(1)
+y40(1) ^ x40(0) --> rfm(1)
+y38(0) ^ x38(0) --> dfg(0)
+x17(1) ^ y17(0) --> gqf(1)
+y42(1) ^ x42(1) --> gmb(0)
+y03(1) & x03(1) --> rjn(1)
+y36(0) & x36(0) --> gkv(0)
+x29(1) & y29(1) --> tgg(1)
+x34(0) ^ y34(1) --> ktj(1)
+y02(0) ^ x02(1) --> ddq(1)
+x31(1) & y31(0) --> pkq(0)
+y10(0) ^ x10(1) --> cfw(1)
+x14(1) ^ y14(1) --> hgh(0)
+x22(1) & y22(1) --> bff(1)
+y36(0) ^ x36(0) --> jgm(0)
+y13(0) ^ x13(1) --> hfd(1)
+y35(0) ^ x35(1) --> tgw(1)
+x14(1) & y14(1) --> cnm(1)
+x39(0) ^ y39(0) --> dpb(0)
+y20(0) ^ x20(0) --> pnh(0)
+y16(0) & x16(0) --> hnb(0)
+x23(0) ^ y23(0) --> cmb(0)
+x09(1) ^ y09(0) --> pmc(1)
+y28(0) & x28(1) --> hkm(0)
+y24(0) ^ x24(1) --> grp(1)
+y11(1) & x11(1) --> brk(1)
+x19(1) & y19(1) --> mss(1)
+x01(0) ^ y01(0) --> hbw(0)
+y00(1) ^ x00(1) -------------> z00(0)
+x13(1) & y13(0) --> fjs(0)
+x17(1) & y17(0) --> cjd(0)
+x24(1) & y24(0) --> csr(0)
+x37(1) ^ y37(0) --> twj(1)
+x10(1) & y10(0) --> cwp(0)
+y31(0) ^ x31(1) --> jvs(1)
+x18(1) & y18(0) --> wpq(0)
+x35(1) & y35(0) --> rfw(0)
+x08(0) & y08(0) --> mtp(0)
+y30(1) ^ x30(1) --> mbb(0)
+y19(1) ^ x19(1) --> fkh(0)
+hbw(0) ^ fhd(1) -------------> z01(1)
+y44(1) ^ x44(1) --> jrm(0)
+x43(1) & y43(0) --> sjk(0)
+y04(1) ^ x04(0) --> ckp(1)
+x42(1) & y42(1) --> jwh(1)
+y15(0) ^ x15(1) --> pfm(1)
+x02(1) & y02(0) --> jns(0)
+x27(1) ^ y27(0) --> vkf(1)
+
+***LEVEL 1***
+
+fhd(1) & hbw(0) --> jjg(0)
+
+***LEVEL 2***
+
+jjg(0) | kkp(0) --> csn(0)
+
+***LEVEL 3***
+
+ddq(1) & csn(0) --> ssn(0)
+ddq(1) ^ csn(0) -------------> z02(1)
+ssn(0) | jns(0) --> hct(0)
+hct(0) & gsr(0) --> bsv(0)
+hct(0) ^ gsr(0) -------------> z03(0)
+
+***LEVEL 4***
+
+bsv(0) | rjn(1) --> sgf(1)
+sgf(1) & ckp(1) --> vft(1)
+sgf(1) ^ ckp(1) -------------> z04(0)
+vft(1) | qbn(0) --> jmc(1)
+rdw(0) ^ jmc(1) -------------> z05(1)
+
+***LEVEL 5***
+
+rdw(0) & jmc(1) --> jpw(0)
+mqf(0) | jpw(0) --> mmp(0)
+
+***LEVEL 6***
+
+frf(1) ^ mmp(0) --> dhg(1)
+mmp(0) & frf(1) --> jvk(0)
+
+***LEVEL 7***
+
+dhg(1) & kwn(1) --> pvc(1)
+nvf(0) | jvk(0) -------------> z06(0)
+kwn(1) ^ dhg(1) -------------> z07(0)
+pvc(1) | tcs(0) --> qwk(1)
+qwk(1) ^ cbg(0) -------------> z08(1)
+
+***LEVEL 8***
+
+qwk(1) & cbg(0) --> fgw(0)
+
+***LEVEL 9***
+
+mtp(0) | fgw(0) --> gsj(0)
+gsj(0) & pmc(1) --> gtf(0)
+
+***LEVEL 10***
+
+pmc(1) ^ gsj(0) -------------> z09(1)
+gtf(0) | cpf(0) --> dds(0)
+cfw(1) ^ dds(0) -------------> z10(1)
+cfw(1) & dds(0) --> wjj(0)
+
+***LEVEL 11***
+
+cwp(0) | wjj(0) --> dqp(0)
+dqp(0) & brk(1) --> cgn(0)
+
+***LEVEL 12***
+
+dqp(0) ^ brk(1) -------------> z11(1)
+dpd(0) | cgn(0) --> krq(0)
+
+***LEVEL 13***
+
+hpg(1) & krq(0) --> brp(0)
+krq(0) ^ hpg(1) -------------> z12(1)
+brp(0) | bcg(0) --> htq(0)
+
+***LEVEL 14***
+
+htq(0) ^ hfd(1) -------------> z13(1)
+hfd(1) & htq(0) --> jwg(0)
+fjs(0) | jwg(0) --> qtc(0)
+
+***LEVEL 15***
+
+qtc(0) ^ hgh(0) -------------> z14(0)
+qtc(0) & hgh(0) --> kdb(0)
+cnm(1) | kdb(0) --> nhw(1)
+pfm(1) ^ nhw(1) -------------> z15(0)
+nhw(1) & pfm(1) --> brq(1)
+
+***LEVEL 16***
+
+wrn(0) | brq(1) --> vpw(1)
+vpw(1) & mdk(0) --> vpt(0)
+hnb(0) | vpt(0) --> qpf(0)
+vpw(1) ^ mdk(0) -------------> z16(1)
+
+***LEVEL 17***
+
+qpf(0) ^ gqf(1) -------------> z17(1)
+gqf(1) & qpf(0) --> jpc(0)
+
+***LEVEL 18***
+
+jpc(0) | cjd(0) --> mjh(0)
+rdr(1) & mjh(0) --> kpd(0)
+mjh(0) ^ rdr(1) -------------> z18(1)
+
+***LEVEL 19***
+
+wpq(0) | kpd(0) --> ttj(0)
+ttj(0) & fkh(0) --> hsv(0)
+hsv(0) | mss(1) --> smm(1)
+fkh(0) ^ ttj(0) -------------> z19(0)
+
+***LEVEL 20***
+
+smm(1) ^ pnh(0) -------------> z20(1)
+smm(1) & pnh(0) --> cbq(0)
+wnv(0) | cbq(0) --> mmj(0)
+
+***LEVEL 21***
+
+mmj(0) & cqh(1) --> scp(0)
+mmj(0) ^ cqh(1) -------------> z21(1)
+
+***LEVEL 22***
+
+scp(0) | fnj(0) --> vdm(0)
+
+***LEVEL 23***
+
+vdm(0) ^ qhv(0) -------------> z22(0)
+vdm(0) & qhv(0) --> sbj(0)
+bff(1) | sbj(0) --> fmm(1)
+cmb(0) & fmm(1) -------------> z23(0)
+fmm(1) ^ cmb(0) --> bhd(1)
+
+***LEVEL 24***
+
+bhd(1) | gjg(0) --> vcn(1)
+vcn(1) & grp(1) --> dhd(1)
+dhd(1) | csr(0) --> vks(1)
+wcb(1) & vks(1) --> wng(1)
+wcb(1) ^ vks(1) -------------> z25(0)
+grp(1) ^ vcn(1) -------------> z24(0)
+
+***LEVEL 25***
+
+qqq(0) | wng(1) --> pmw(1)
+
+***LEVEL 26***
+
+pmw(1) ^ nkv(0) -------------> z26(1)
+pmw(1) & nkv(0) --> vdp(0)
+stm(0) | vdp(0) --> trb(0)
+vkf(1) & trb(0) --> ssf(0)
+vkf(1) ^ trb(0) -------------> z27(1)
+
+***LEVEL 27***
+
+ssf(0) | khd(0) --> qqr(0)
+qqr(0) ^ bps(1) -------------> z28(1)
+bps(1) & qqr(0) --> cqq(0)
+
+***LEVEL 28***
+
+hkm(0) | cqq(0) --> cqr(0)
+cqr(0) ^ nhb(0) -------------> z29(0)
+
+***LEVEL 29***
+
+cqr(0) & nhb(0) --> fdf(0)
+tgg(1) | fdf(0) --> kts(1)
+
+***LEVEL 30***
+
+kts(1) & mbb(0) --> cfr(0)
+cfr(0) | pww(1) --> fsn(1)
+jvs(1) ^ fsn(1) -------------> z31(0)
+mbb(0) ^ kts(1) -------------> z30(1)
+jvs(1) & fsn(1) --> nqb(1)
+
+***LEVEL 31***
+
+pkq(0) | nqb(1) --> cbw(1)
+
+***LEVEL 32***
+
+wjn(0) ^ cbw(1) -------------> z32(1)
+cbw(1) & wjn(0) --> sjw(0)
+vtc(0) | sjw(0) --> mtd(0)
+mtd(0) & vrp(1) --> pmt(0)
+mtd(0) ^ vrp(1) -------------> z33(1)
+
+***LEVEL 33***
+
+pmt(0) | rsb(0) --> qsj(0)
+ktj(1) & qsj(0) --> pws(0)
+qsj(0) ^ ktj(1) -------------> z34(1)
+pws(0) | fkp(0) --> dbp(0)
+dbp(0) ^ tgw(1) -------------> z35(1)
+
+***LEVEL 34***
+
+tgw(1) & dbp(0) --> vms(0)
+rfw(0) | vms(0) --> tng(0)
+tng(0) ^ jgm(0) -------------> z36(0)
+
+***LEVEL 35***
+
+jgm(0) & tng(0) --> jbk(0)
+gkv(0) | jbk(0) --> ntc(0)
+twj(1) & ntc(0) --> pjh(0)
+
+***LEVEL 36***
+
+ntc(0) ^ twj(1) -------------> z37(1)
+nhv(0) | pjh(0) --> nfb(0)
+nfb(0) ^ dfg(0) --> nbf(0)
+nfb(0) & dfg(0) --> cdj(0)
+
+***LEVEL 37***
+
+cdj(0) | nbf(0) --> hvf(0)
+
+***LEVEL 38***
+
+dpb(0) & hvf(0) --> dbg(0)
+hvf(0) ^ dpb(0) -------------> z39(0)
+mgj(0) | dbg(0) --> fqf(0)
+
+***LEVEL 39***
+
+fqf(0) & rfm(1) --> gvs(0)
+fqf(0) ^ rfm(1) -------------> z40(1)
+jcd(0) | gvs(0) --> smp(0)
+
+***LEVEL 40***
+
+twk(1) ^ smp(0) -------------> z41(1)
+twk(1) & smp(0) --> prv(0)
+prv(0) | mvd(0) --> sqt(0)
+sqt(0) & gmb(0) --> rtr(0)
+
+***LEVEL 41***
+
+sqt(0) ^ gmb(0) -------------> z42(0)
+rtr(0) | jwh(1) --> mjf(1)
+
+***LEVEL 42***
+
+mjf(1) & mrr(1) --> hnp(1)
+mjf(1) ^ mrr(1) -------------> z43(0)
+hnp(1) | sjk(0) --> mjk(1)
+
+***LEVEL 43***
+
+jrm(0) ^ mjk(1) -------------> z44(1)
+jrm(0) & mjk(1) --> nwf(0)
+
+***LEVEL 44***
+
+nwf(0) | jth(1) -------------> z45(1)
